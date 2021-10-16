@@ -7,11 +7,11 @@ function Pagination({ gifPerPage, totalImages, paginate }) {
     pageNumber.push(i);
   }
   return (
-    <nav>
-      <ul className="pagination justify-content-center paginate-1">
+    <nav className='pagination-outer'>
+      <ul className="pagination">
         {pageNumber.map((number) => (
-          <li key={number} className="page-item ">
-            <a onClick={() => paginate(number)} className="page-link" href='#'>
+          <li key={number} className="page-item">
+            <a onClick={() => paginate(number)} className="page-link" href='!#'>
               {number}
             </a>
           </li>

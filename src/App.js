@@ -1,40 +1,71 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import axios from "axios";
+import Pagination from "./Pagination";
 
 const URL =
   "https://api.giphy.com/v1/gifs/search?api_key=JEkYv0FwSbDnE1h9WC0y0pZ1TQarFWyH";
 function App() {
   const [images, setImages] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [gifPerPage] = useState(9);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
   };
 
+  const handleKeyPress = (e) => {
+    if(e.keyCode === 13){
+      handleSubmit();
+    }
+  }
+    
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    
+    setLoading(true);
     const results = await axios(URL, {
       params: {
         q: search,
       },
     });
+
     setImages(results.data.data);
+    setLoading(false);
     console.log(results.data.data);
   };
 
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if (loading) {
+    return <h2 className="loading">{''}</h2>;
+  }
+
+  // get current posts
+  const indexOfLastPost = currentPage * gifPerPage;
+  const indexOfFirstPost = indexOfLastPost - gifPerPage;
+  const currentPosts = images.slice(indexOfFirstPost, indexOfLastPost);
+
   return (
     <>
-      <div className="input-group mb-3 custom-div">
+      <div className="title-container">
+        <h1 className="text-capitalize title">giphy search</h1>
+      </div>
+
+      <div className="input-container">
         <input
-          className='form-control custom-input'
+          className=""
           type="text"
           placeholder="Search gif"
           value={search}
           onChange={handleSearchChange}
+          onKeyDown={handleKeyPress}
         />
         <div>
           <button
+            id="bouton"
             class="btn btn-outline-white btn-success"
             type="button"
             onClick={handleSubmit}
@@ -43,17 +74,29 @@ function App() {
           </button>
         </div>
       </div>
-      <div className="container mx-auto">
-        {images.map((pic) => {
+
+      <div className="gif-container">
+        {currentPosts.map((pic) => {
           return (
-            <div className="box-border h-50 w-50 p-4 border-4">
+            <div className="gif-item">
               <div key={pic.id}>
                 <h5>{pic.title}</h5>
-                <img src={pic.images.downsized_medium.url} alt="" />
+                <img
+                  src={pic.images.downsized_medium.url}
+                  alt=""
+                  className="img-gif"
+                />
               </div>
             </div>
           );
         })}
+      </div>
+      <div className='pagination-container'>
+        <Pagination
+          gifPerPage={gifPerPage}
+          totalImages={images.length}
+          paginate={paginate}
+        />
       </div>
     </>
   );

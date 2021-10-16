@@ -1,11 +1,135 @@
-.button{
-    max-width: 768px;
-    
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Beastly&display=swap');
+
+#root{
+  background-color: rgb(37, 37, 37);
 }
-.custom-input{
-    max-width: 768px;
+body{
+  background-color: black;
 }
-.custom-div{
-    margin-top: 2rem;
+
+.title-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-    
+.title{
+background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 6rem;
+  font-family: 'Rubik Beastly', cursive;
+}
+.input-container{
+  display: flex;
+  margin: 5rem 0 0 5rem;
+  width: 30rem;
+}
+input[type=text]{
+  width: 20rem;
+  background-color: rgb(211, 208, 208);
+  
+}
+.img-gif{
+  border-radius: 10%;
+}
+.gif-container{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-left: 5rem;
+}
+
+.pagination-outer{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-top: 2rem;
+}
+.pagination{
+  display: inline-flex;
+    position: relative;
+}
+.pagination li a.page-link{
+    color: #fff;
+    background-color: #000;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 40px;
+    height: 40px;
+    width: 30px;
+    padding: 0;
+    margin: 0 5px 6px;
+    border: none;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease 0s;
+}
+.pagination li a.page-link:hover,
+.pagination li a.page-link:focus,
+.pagination li.active a.page-link:hover,
+.pagination li.active a.page-link{
+    color: #fff;
+    background: #000;
+    text-shadow: 0 0 6px rgba(0,0,0,0.2);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.pagination li a.page-link:before{
+    content: '';
+    background: linear-gradient(#F03814 0, #F03814 25%, #FF8726 25%, #FF8726 50%, #FEB914 50%, #FEB914 75%, #2C9FA2 75%, #2C9FA2 100%);
+    height: 0;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    transition: all 0.3s ease 0s;
+}
+.pagination li a.page-link:hover:before,
+.pagination li a.page-link:focus:before,
+.pagination li.active a.page-link:hover:before,
+.pagination li.active a.page-link:before{
+    height: 100%;
+}
+@media only screen and (max-width: 580px){
+    .pagination{
+        font-size: 0;
+        display: inline-block;
+    }
+    .pagination li{
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 0 10px;
+    }
+    .gif-container{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      margin-right: 3rem;
+      grid-gap: 1rem;
+}
+.title-container{
+  margin-left: 5rem;
+  
+}
+.title{
+  font-size: 4rem;
+}
+}
+
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  width: 6rem;
+  height: 6rem;
+  margin: 0 auto;
+  margin-top: 10rem;
+  border-radius: 50%;
+  border: 3px solid #ccc;
+  border-top-color: rgb(53, 79, 167);
+  animation: spinner 0.6s linear infinite;
+  
+  
+}
